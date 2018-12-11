@@ -13,7 +13,10 @@
       padding: 0;
       box-sizing: border-box;
     }
-
+    html, body {
+      width: 100%;
+      height: 100%;
+    }
     body {
       background: #000;
       color: #eee;
@@ -24,23 +27,30 @@
       font-weight: 300;
     }
 
+    textarea {
+      resize: none;
+    }
+
     .wrap {
-      margin-top: 30vh;
+      height: 100%;
       text-align: center;
     }
 
-    .copylink-url {
+    .textarea-container {
+      width: 100%;
+      min-height: 80%;
+      padding: 40px 40px;
+      outline: 0;
+      border: 0;
+      font-size: 14px;
+      white-space: pre-wrap;
       display: block;
       padding: 5px;
       margin: 20px 0;
       word-break: break-all;
-      white-space: pre;
       color: #fff;
-      border-bottom: 1px dashed #d9d9d9;
-      text-decoration: none;
+      border: 1px dashed #d9d9d9;
       background: #333;
-      font-size: 16px;
-      text-align: center;
       font-family: Lucida Console, Consolas, Monaco, Andale Mono, Ubuntu Mono, monospace;
     }
 
@@ -60,29 +70,25 @@
 
 <body>
   <div class="wrap">
-    <h2>请点击下方选区进行复制</h2>
-    <span class="copylink-url" id="J-copylink-url" onclick="javascript:event.preventDefault();">
-      loading...
-    </span>
+    <h2>请在下方输入</h2>
+    <textarea class="textarea-container" id="J-textarea"></textarea>
   </div>
-  <h2 class="footer" id="J-footer">关闭</h2>
+  <h2 class="footer" id="J-footer">
+    生成并复制
+  </h2>
   <script src="https://cdn.bootcss.com/notie/4.3.1/notie.min.js"></script>
   <script src="https://cdn.bootcss.com/clipboard.js/2.0.4/clipboard.min.js"></script>
 </body>
 <script type="text/javascript">
   window.onload = function () {
-    var $ele = document.getElementById('J-copylink-url');
+    var $textarea = document.getElementById('J-textarea');
     var $footer = document.getElementById('J-footer');
-    var search = decodeURI(location.search.slice(1));
-
-    $ele.setAttribute('data-clipboard-text', search);
-    $ele.innerHTML = search || 'url 参数错误';
-
-    var clipboard = new ClipboardJS('#J-copylink-url');
-
-    $footer.onclick = function () {
-      closeWebPage();
-    }
+    var baseUrl = location.origin + '?';
+    var clipboard = new ClipboardJS('#J-footer', {
+      text: function (trigger) {
+        return baseUrl + encodeURI($textarea.value);
+      }
+    });
 
     clipboard.on('success', function (e) {
       window.notie.alert({ type: 'success', text: 'Success!', time: 2 });
@@ -90,28 +96,6 @@
     clipboard.on('error', function (e) {
       window.notie.alert({ type: 'error', text: 'Error!', time: 2 });
     });
-
-    function closeWebPage() {
-      if (navigator.userAgent.indexOf("MSIE") > 0) {
-        if (navigator.userAgent.indexOf("MSIE 6.0") > 0) {
-          window.opener = null;
-          window.close();
-        } else {
-          window.open('', '_top');
-          window.top.close();
-        }
-      }
-      else if (navigator.userAgent.indexOf("Firefox") > 0) {
-        window.location.href = 'about:blank ';
-      } else {
-        window.opener = null;
-        window.open('', '_self');
-        window.close();
-      }
-      setTimeout(function () {
-        window.notie.alert({ type: 'error', text: 'Close Fail!', time: 2 });
-      }, 1000)
-    }
   }
 </script>
 
