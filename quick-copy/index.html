@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <link data-n-head="true" rel="icon" type="image/x-icon" href="favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Quickly Copy</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #000;
+      color: #eee;
+      padding: 20px;
+    }
+
+    h2 {
+      font-weight: 300;
+    }
+
+    .wrap {
+      margin-top: 30vh;
+      text-align: center;
+    }
+
+    .copylink-url {
+      display: block;
+      padding: 5px;
+      margin: 20px 0;
+      word-break: break-all;
+      color: #fff;
+      border-bottom: 1px dashed #d9d9d9;
+      text-decoration: none;
+      background: #333;
+      font-size: 16px;
+      text-align: center;
+      font-family: Lucida Console, Consolas, Monaco, Andale Mono, Ubuntu Mono, monospace;
+    }
+
+    .footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      line-height: 10vh;
+      height: 10vh;
+      background: #df725f;
+      width: 100%;
+      text-align: center;
+    }
+  </style>
+  <link href="https://cdn.bootcss.com/notie/4.3.1/notie.min.css" rel="stylesheet">
+</head>
+
+<body>
+  <div class="wrap">
+    <h2>请点击下方选区进行复制</h2>
+    <span class="copylink-url" id="J-copylink-url" onclick="javascript:event.preventDefault();">
+      loading...
+    </span>
+  </div>
+  <h2 class="footer" id="J-footer">关闭</h2>
+  <script src="https://cdn.bootcss.com/notie/4.3.1/notie.min.js"></script>
+  <script src="https://cdn.bootcss.com/clipboard.js/2.0.4/clipboard.min.js"></script>
+</body>
+<script type="text/javascript">
+  window.onload = function () {
+    var $ele = document.getElementById('J-copylink-url');
+    var $footer = document.getElementById('J-footer');
+    var search = location.search.slice(1);
+
+    $ele.setAttribute('data-clipboard-text', search);
+    $ele.innerHTML = search || 'url 参数错误';
+
+    var clipboard = new ClipboardJS('#J-copylink-url');
+
+    $footer.onclick = function () {
+      closeWebPage();
+    }
+
+    clipboard.on('success', function (e) {
+      window.notie.alert({ type: 'success', text: 'Success!', time: 2 });
+    });
+    clipboard.on('error', function (e) {
+      window.notie.alert({ type: 'error', text: 'Error!', time: 2 });
+    });
+
+    function closeWebPage() {
+      if (navigator.userAgent.indexOf("MSIE") > 0) {
+        if (navigator.userAgent.indexOf("MSIE 6.0") > 0) {
+          window.opener = null;
+          window.close();
+        } else {
+          window.open('', '_top');
+          window.top.close();
+        }
+      }
+      else if (navigator.userAgent.indexOf("Firefox") > 0) {
+        window.location.href = 'about:blank ';
+      } else {
+        window.opener = null;
+        window.open('', '_self');
+        window.close();
+      }
+      setTimeout(function () {
+        window.notie.alert({ type: 'error', text: 'Close Fail!', time: 2 });
+      }, 1000)
+    }
+  }
+</script>
+
+</html>
