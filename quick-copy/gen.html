@@ -13,10 +13,13 @@
       padding: 0;
       box-sizing: border-box;
     }
-    html, body {
+
+    html,
+    body {
       width: 100%;
       height: 100%;
     }
+
     body {
       background: #000;
       color: #eee;
@@ -33,6 +36,8 @@
 
     .wrap {
       height: 100%;
+      max-width: 560px;
+      margin: 0 auto;
       text-align: center;
     }
 
@@ -64,6 +69,13 @@
       width: 100%;
       text-align: center;
     }
+
+    .notie-textbox-inner svg {
+      width: 50%;
+      height: 50%;
+      max-width: 320px;
+      max-height: 320px;
+    }
   </style>
   <link href="https://cdn.bootcss.com/notie/4.3.1/notie.min.css" rel="stylesheet">
 </head>
@@ -76,27 +88,11 @@
   <h2 class="footer" id="J-footer">
     生成并复制
   </h2>
+
   <script src="https://cdn.bootcss.com/notie/4.3.1/notie.min.js"></script>
   <script src="https://cdn.bootcss.com/clipboard.js/2.0.4/clipboard.min.js"></script>
+  <script src="https://cdn.bootcss.com/qrcode-generator/1.4.1/qrcode.min.js"></script>
+  <script src="./gen.js"></script>
 </body>
-<script type="text/javascript">
-  window.onload = function () {
-    var $textarea = document.getElementById('J-textarea');
-    var $footer = document.getElementById('J-footer');
-    var baseUrl = location.origin + '?';
-    var clipboard = new ClipboardJS('#J-footer', {
-      text: function (trigger) {
-        return baseUrl + encodeURI($textarea.value);
-      }
-    });
-
-    clipboard.on('success', function (e) {
-      window.notie.alert({ type: 'success', text: 'Success!', time: 2 });
-    });
-    clipboard.on('error', function (e) {
-      window.notie.alert({ type: 'error', text: 'Error!', time: 2 });
-    });
-  }
-</script>
 
 </html>
