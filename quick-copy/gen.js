@@ -8,7 +8,7 @@ window.onload = function () {
   });
 
   clipboard.on('success', function (e) {
-    var data = create_qrcode($textarea.value);
+    var data = create_qrcode(baseUrl + encodeURI($textarea.value));
     window.notie.confirm({
       text: '<p>已复制，二维码如下:<p/></br>' + data
     });
