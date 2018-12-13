@@ -4,15 +4,15 @@
 
 举个例子: 手机端需要复制 PC 上文字，又不能用 im 传输，这个时候就可以用这个 `quick-copy`，下面就是生成文字 `quick-copy` 的链接
 
-[https://qc-h0qe5zzua.now.sh/?quick-copy](https://qc-kyqbdy8s4.now.sh?quick-copy)
+[https://qc.now.sh/?quick-copy](https://qc.now.sh?quick-copy)
 
 ![](../doc/img/quick-copy.png)
 
 ## Usage
 
-在 `https://qc-h0qe5zzua.now.sh/?` 后添加需要复制的文本即可，如果需要换行空格等，请访问生成站点:
+在 `https://qc.now.sh/?` 后添加需要复制的文本即可，如果需要换行空格等，请访问生成站点:
 
-[https://qc-h0qe5zzua.now.sh/gen.html](https://qc-h0qe5zzua.now.sh/gen.html)
+[https://qc.now.sh/gen.html](https://qc.now.sh/gen.html)
 
 推荐添加到书签栏
 

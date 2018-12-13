@@ -2,7 +2,7 @@
 
 打开一个超大的 textarea
 
-[https://n-d2vud7l0d.now.sh/](https://n-d2vud7l0d.now.sh/)
+[https://x-note.now.sh/](https://x-note.now.sh/)
 
 ![](../doc/img/notes.png)
 
