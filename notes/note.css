@@ -27,8 +27,9 @@ body {
     padding: 40px 40px;
     outline: 0;
     border: 0;
-    font-size: 14px;
+    font-size: 12px;
+    line-height: 1.5;
     background: rgba(255, 255, 255, 1);
     white-space: pre-wrap;
-    font-family: Lucida Console, Consolas, Monaco, Andale Mono, Ubuntu Mono, monospace;
+    font-family: SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;
 }
