@@ -21,7 +21,6 @@
     $textarea.oninput = throttle(autoSave, 1000);
 
     function autoSave() {
-      console.log(+Date.now())
       window.localStorage.setItem('x-notes-value', $textarea.value);
     }
 
