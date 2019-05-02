@@ -1,16 +1,41 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <link data-n-head="true" rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="stylesheet" href="note.css">
-    <title>
-      Note
-    </title>
-  </head>
-  <body>
-    <div class="note-wrapper">
-      <textarea class="note-container" id="js-note-container" autofocus contenteditable="" spellcheck="false"></textarea>
-    </div>
-  </body>
+
+<head>
+  <meta charset="utf-8">
+  <link data-n-head="true" rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="stylesheet" href="note.css">
+  <title>
+    Note
+  </title>
+</head>
+
+<body>
+  <div class="note-wrapper">
+    <textarea class="note-container" id="js-note-container" autofocus contenteditable="" spellcheck="false"></textarea>
+  </div>
+  <script>
+    var $textarea = document.getElementById('js-note-container');
+    var autoSavedValue = window.localStorage.getItem('x-notes-value');
+    $textarea.value = autoSavedValue;
+    $textarea.oninput = throttle(autoSave, 1000);
+
+    function autoSave() {
+      console.log(+Date.now())
+      window.localStorage.setItem('x-notes-value', $textarea.value);
+    }
+
+    function throttle(method, delay) {
+      var timer = null;
+      return function () {
+        var context = this, args = arguments;
+        clearTimeout(timer);
+        timer = setTimeout(function () {
+          method.apply(context, args);
+        }, delay);
+      }
+    }
+  </script>
+</body>
+
 </html>
