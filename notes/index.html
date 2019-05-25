@@ -4,36 +4,63 @@
 <head>
   <meta charset="utf-8">
   <link data-n-head="true" rel="icon" type="image/x-icon" href="favicon.ico">
-  <link rel="stylesheet" href="note.css">
+  <link rel="stylesheet" href="./note.css">
   <title>
     Note
   </title>
+  <link data-name="vs/editor/editor.main" rel="stylesheet"
+    href="https://cdn.bootcss.com/monaco-editor/0.17.0/min/vs/editor/editor.main.css" />
+  <script src="https://cdn.bootcss.com/monaco-editor/0.17.0/min/vs/loader.js"></script>
+  <script src="https://cdn.bootcss.com/monaco-editor/0.17.0/min/vs/editor/editor.main.nls.js"></script>
+  <script src="https://cdn.bootcss.com/monaco-editor/0.17.0/min/vs/editor/editor.main.js"></script>
 </head>
 
 <body>
   <div class="note-wrapper">
-    <textarea class="note-container" id="js-note-container" autofocus contenteditable="" spellcheck="false"></textarea>
+    <div class="note-container" id="js-note-container" autofocus contenteditable="" spellcheck="false"></div>
   </div>
-  <script>
+  <script type="text/javascript">
+    require.config({ paths: { 'vs': 'https://cdn.bootcss.com/monaco-editor/0.17.0/min/vs' } });
+
     var $textarea = document.getElementById('js-note-container');
     var autoSavedValue = window.localStorage.getItem('x-notes-value');
-    $textarea.value = autoSavedValue;
-    $textarea.oninput = throttle(autoSave, 1000);
 
-    function autoSave() {
-      window.localStorage.setItem('x-notes-value', $textarea.value);
-    }
-
-    function throttle(method, delay) {
-      var timer = null;
-      return function () {
-        var context = this, args = arguments;
-        clearTimeout(timer);
-        timer = setTimeout(function () {
-          method.apply(context, args);
-        }, delay);
-      }
-    }
+    require(['vs/editor/editor.main'], function () {
+      monaco.languages.typescript.javascriptDefaults.setDiagnosticsOptions({
+        noSemanticValidation: true,
+        noSyntaxValidation: true
+      });
+      var editor = monaco.editor.create($textarea, {
+        value: autoSavedValue,
+        language: 'javascript',
+        lineNumbers: "off",
+        fontLigatures: true,
+        fontFamily: 'Fira Code',
+        automaticLayout: true,
+        dragAndDrop: true,
+        quickSuggestions: false,
+        hideCursorInOverviewRuler: true,
+        highlightActiveIndentGuide: false,
+        lineDecorationsWidth: 30,
+        overviewRulerBorder: false,
+        renderFinalNewline: true,
+        wordBasedSuggestions: false,
+        minimap: {
+          renderCharacters: false,
+          maxColumn: 200,
+          showSlider: false,
+        },
+        scrollBeyondLastLine: false,
+        scrollbar: {
+          horizontal: 'hidden',
+          vertical: 'hidden'
+        },
+        selectOnLineNumbers: false
+      });
+      editor.onDidBlurEditorText(function (e) {
+        window.localStorage.setItem('x-notes-value', editor.getValue());
+      })
+    });
   </script>
 </body>
 
